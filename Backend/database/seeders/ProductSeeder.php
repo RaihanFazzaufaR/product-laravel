@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         Product::factory()->count(30)->create([
-            'image' => 'products/default.png', // Default image for all products
+            'image' => 'products/default.jpg', // Default image for all products
         ]);
     }
 }

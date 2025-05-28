@@ -7,12 +7,21 @@ use App\Models\Product;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return ProductResource::collection(Product::paginate(10));
+        $query = Product::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->orderBy('created_at', 'desc')->paginate(12);
+
+        return ProductResource::collection($products);
     }
 
     public function store(Request $request)
@@ -30,6 +39,8 @@ class ProductController extends Controller
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
             $imagePath = $image->storeAs('products', $imageName, 'public');
             $validate['image'] = $imagePath;
+        } else {
+            $validate['image'] = 'products/default.jpg';
         }
 
         $product = Product::create($validate);
@@ -59,6 +70,8 @@ class ProductController extends Controller
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
             $imagePath = $image->storeAs('products', $imageName, 'public');
             $validate['image'] = $imagePath;
+        } else if (!$request->hasFile('image')) {
+            $validate['image'] = $product->image;
         }
 
         $product->update($validate);
@@ -67,16 +80,12 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->image) {
+        if ($product->image != 'products/default.jpg') {
             Storage::disk('public')->delete($product->image);
         }
         
         $product->delete();
-        
-        if (!$product->wasDeleted()) {
-            return response()->json(['error' => 'Product deletion failed'], 500);
-        }
 
-        return response()->json(['success' => 'Product deleted successfully'], 200);
+        return response()->json(['message' => 'Product deleted successfully'], 200);
     }
 }
