@@ -9,17 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return ProductResource::collection(Product::paginate(10));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validate = $request->validate([
@@ -39,17 +33,11 @@ class ProductController extends Controller
         return new ProductResource($product);   
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Product $product)
     {
         return new ProductResource($product);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function update(Request $request, Product $product)
     {
         $validate = $request->validate([
@@ -62,24 +50,19 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             if ($product->image) {
-                // Delete the old image if it exists
                 Storage::disk('public')->delete($product->image);
             }
             $imagePath = $request->file('image')->store('products', 'public');
-            $validate['image'] = $imagePath; // Store the image path
+            $validate['image'] = $imagePath;
         }
 
         $product->update($validate);
         return new ProductResource($product);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Product $product)
     {
         if ($product->image) {
-            // Delete the image file if it exists
             Storage::disk('public')->delete($product->image);
         }
         
