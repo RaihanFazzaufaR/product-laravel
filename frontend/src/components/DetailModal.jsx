@@ -10,7 +10,6 @@ function DetailModal({ productId, onClose, onShowNotification }) {
     const [stock, setStock] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    // const [errors, setErrors] = useState(null); // Dihapus karena tidak digunakan
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -57,16 +56,16 @@ function DetailModal({ productId, onClose, onShowNotification }) {
                     <img
                         src={ image }
                         alt={name}
-                        className="w-full h-full object-cover rounded-md mb-4 border border-gray-200 mx-auto" // mx-auto untuk center
+                        className="w-full h-full object-cover rounded-md mb-4 border border-gray-200 mx-auto"
                         onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = `https://placehold.co/400x300/E0E0E0/333333?text=No+Image`; // Placeholder jika gambar error
+                            e.target.src = `https://placehold.co/400x300/E0E0E0/333333?text=No+Image`;
                         }}
                     />
                     <h3 className="text-xl font-bold mb-1 text-gray-900">{name}</h3>
                     <h4 className="text-gray-700 text-lg">Rp. {price}</h4>
-                    <h4 className="text-gray-600 text-base">Stok: {stock !== null && stock !== '' ? stock : '-'}</h4> {/* Peningkatan */}
-                    <h4 className="text-gray-600 text-base mt-2">Deskripsi: {description || 'Tidak ada deskripsi.'}</h4> {/* Peningkatan */}
+                    <h4 className="text-gray-600 text-base">Stok: {stock !== null && stock !== '' ? stock : '-'}</h4>
+                    <h4 className="text-gray-600 text-base mt-2">Deskripsi: {description || 'Tidak ada deskripsi.'}</h4>
                 </div>
                 <div className="flex justify-center mt-4">
                     <button

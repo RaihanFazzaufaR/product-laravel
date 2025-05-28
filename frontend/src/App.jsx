@@ -51,7 +51,7 @@ function App() {
   };
 
   const confirmDeleteProduct = async () => {
-    setShowConfirmModal(false); // Tutup modal
+    setShowConfirmModal(false);
     if (productToDeleteId) {
       try {
         await axios.delete(`${API_BASE_URL}/products/${productToDeleteId}`);
@@ -163,14 +163,14 @@ function App() {
                           fetchProducts(pageNumber, searchTerm);
                         }
                       }}
-                      disabled={!link.url} // Nonaktifkan tombol jika tidak ada URL
+                      disabled={!link.url}
                       className={`px-4 py-2 border rounded-lg text-sm font-medium transition duration-200
                         ${link.active
                           ? 'bg-blue-600 text-white shadow-md'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border-gray-300'}
                         ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}
                       `}
-                      // Gunakan dangerouslySetInnerHTML untuk merender entitas HTML (&laquo;, &raquo;)
+                      
                       dangerouslySetInnerHTML={{ __html: link.label }}
                     />
                   );

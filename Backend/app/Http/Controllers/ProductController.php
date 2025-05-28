@@ -64,7 +64,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             if ($product->image != 'products/default.jpg') {
-                Storage::disk('public')->delete($product->image); // Reset default image if it exists
+                Storage::disk('public')->delete($product->image);
             }
             $image = $request->file('image');
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
