@@ -29,7 +29,7 @@ Pastikan sistem Anda memenuhi persyaratan berikut sebelum instalasi:
 
 * **PHP**: Versi 8.3 atau yang lebih tinggi (pengembangan ini menggunakan versi 8.3.3)
 * **Composer**: Untuk manajemen dependensi Laravel (pengembangan ini menggunakan versi 2.6.5)
-* **Node.js**: Versi 14 atau yang lebih tinggi (pengembangan ini menggunakan versi 22 atau bisa LTS terbaru)
+* **Node.js**: Versi 14 atau yang lebih tinggi (pengembangan ini menggunakan versi 22)
 * **npm** atau **Yarn**: Untuk manajemen paket JavaScript (pengembangan ini menggunakan npm versi 11.3.0)
 * **Database**: MySQL (pengembangan ini menggunakan MySQL versi 11.2.2-MariaDB)
 
@@ -104,7 +104,7 @@ Ikuti langkah-langkah di bawah ini untuk mengatur dan menjalankan proyek di ling
     ```bash
     php artisan serve --port=8000
     ```
-    Backend API sekarang akan berjalan di `http://localhost:8000`. Biarkan terminal ini tetap terbuka.
+    Pastikan Backend API berjalan di `http://localhost:8000`. Biarkan terminal ini tetap terbuka.
 
 ### 3. Frontend React Setup
 
