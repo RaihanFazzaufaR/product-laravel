@@ -57,7 +57,7 @@ Ikuti langkah-langkah di bawah ini untuk mengatur dan menjalankan proyek di ling
 1.  **Navigasi ke Folder Backend**:
     Buka terminal atau command prompt dan masuk ke folder `Backend`:
     ```bash
-    cd backend
+    cd Backend
     ```
 
 2.  **Konfigurasi Environment**:
@@ -98,7 +98,7 @@ Ikuti langkah-langkah di bawah ini untuk mengatur dan menjalankan proyek di ling
     ```bash
     php artisan storage:link
     ```
-    **Catatan untuk `.gitignore`**: Dikarenakan, file `.gitignore` di root proyek backend telah dikonfigurasi, Anda perlu menempatkan gambar default (demgan menggunakan nama `default.jpg` maksimal 2MB) secara manual di `product-api/public/storage/products/` agar sistem dapat melacaknya setelah menjalankan `php artisan storage:link`.
+    **Catatan untuk `.gitignore`**: Dikarenakan, file `.gitignore` di root proyek backend telah dikonfigurasi, Anda perlu menempatkan gambar default (dengan menggunakan nama `default.jpg` maksimal 2MB) secara manual di `product-api/public/storage/products/` agar sistem dapat melacaknya setelah menjalankan `php artisan storage:link`.
 
 7.  **Jalankan Server Laravel**:
     ```bash
