@@ -98,7 +98,7 @@ Ikuti langkah-langkah di bawah ini untuk mengatur dan menjalankan proyek di ling
     ```bash
     php artisan storage:link
     ```
-    **Catatan untuk `.gitignore`**: Dikarenakan, file `.gitignore` di root proyek backend telah dikonfigurasi, Anda perlu menempatkan gambar default (dengan menggunakan nama `default.jpg` maksimal 2MB) secara manual di `product-api/public/storage/products/` agar sistem dapat melacaknya setelah menjalankan `php artisan storage:link`.
+    **Catatan untuk `.gitignore`**: Dikarenakan, file `.gitignore` di root proyek backend telah dikonfigurasi, Anda perlu menempatkan gambar default (dengan menggunakan nama `default.jpg` maksimal 2MB) secara manual di `product-api/public/storage/products/` agar sistem dapat melacaknya setelah menjalankan `php artisan storage:link` serta untuk keperluan gambar dari data seeder yang telah dibuat.
 
 7.  **Jalankan Server Laravel**:
     ```bash
