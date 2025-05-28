@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,12 +22,14 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0.1',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Optional image validation
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-            $validate['image'] = $imagePath; // Store the image path
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('products', $imageName, 'public');
+            $validate['image'] = $imagePath;
         }
 
         $product = Product::create($validate);
@@ -45,14 +48,16 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0.1',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Optional image validation
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
+            if ($product->image != 'products/default.jpg') {
+                Storage::disk('public')->delete($product->image); // Reset default image if it exists
             }
-            $imagePath = $request->file('image')->store('products', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('products', $imageName, 'public');
             $validate['image'] = $imagePath;
         }
 
@@ -67,6 +72,11 @@ class ProductController extends Controller
         }
         
         $product->delete();
-        return response()->json(['message' => 'Product deleted successfully'], 200);
+        
+        if (!$product->wasDeleted()) {
+            return response()->json(['error' => 'Product deletion failed'], 500);
+        }
+
+        return response()->json(['success' => 'Product deleted successfully'], 200);
     }
 }
